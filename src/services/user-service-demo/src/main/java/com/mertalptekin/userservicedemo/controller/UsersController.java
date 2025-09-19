@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/user-service")
 public class UsersController {
 
 
-    @GetMapping
+    @GetMapping("users")
     public ResponseEntity<List<UserDto>> getUsers(){
 
         List<UserDto> users = new ArrayList<>();
