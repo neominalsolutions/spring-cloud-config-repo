@@ -19,6 +19,10 @@ spring:
             allowCredentials: true
             maxAge: 3600
       routes:
+        - id: actuator
+          uri: lb://GATEWAY-SERVICE  
+          predicates:
+            - Path=/actuator/**
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
