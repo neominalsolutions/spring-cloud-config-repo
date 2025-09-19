@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("order-service")
+@RequestMapping("api/v1")
 public class OrdersController {
 
+    @Value("${server.port}")
+    private String port;
 
 
     @Value("${serviceName}")
@@ -17,7 +19,7 @@ public class OrdersController {
 
     @GetMapping
     public  String get() {
-        return  "ServiceName: " + serviceName;
+        return  "ServiceName: " + serviceName +  ", Port: " + port;
     }
 
 
