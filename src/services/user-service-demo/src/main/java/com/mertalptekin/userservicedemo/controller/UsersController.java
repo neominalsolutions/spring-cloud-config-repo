@@ -1,6 +1,7 @@
 package com.mertalptekin.userservicedemo.controller;
 
 import com.mertalptekin.userservicedemo.dto.UserDto;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user-service")
+@RequestMapping("/api/v1/users")
 public class UsersController {
 
 
-    @GetMapping("users")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getUsers(){
 
         List<UserDto> users = new ArrayList<>();

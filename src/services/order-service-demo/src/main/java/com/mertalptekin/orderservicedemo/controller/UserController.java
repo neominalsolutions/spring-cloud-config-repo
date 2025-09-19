@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("order-service")
+@RequestMapping("api/v1/users")
 public class UserController {
 
     private  final UserClient userClient;
@@ -20,7 +20,7 @@ public class UserController {
         this.userClient = userClient;
     }
 
-    @GetMapping("users")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getUsers() {
 
         var response = this.userClient.getUsers();
