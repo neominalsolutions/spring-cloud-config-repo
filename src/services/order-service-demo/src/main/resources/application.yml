@@ -9,7 +9,7 @@ spring:
   cloud:
     stream:
       bindings:
-        order-out:
+        orderIn:
           destination: orders-topic
           content-type: application/json
       kafka:

@@ -1,4 +1,4 @@
-package com.mertalptekin.orderservicedemo;
+package com.mertalptekin.orderservicedemo.consumer;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
