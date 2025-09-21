@@ -1,5 +1,6 @@
 package com.mertalptekin.productservice.consumer;
 
+import com.mertalptekin.messaging.model.OrderStockConfirmed;
 import com.mertalptekin.messaging.model.OrderStockRejected;
 import com.mertalptekin.messaging.model.SubmitOrderMessage;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,11 @@ public class SubmitOrderConsumer {
                 OrderStockRejected event = new OrderStockRejected(message.id(),"Stok yetersiz");
                boolean result = streamBridge.send("orderStockRejected-out-0",event);
                 System.out.println("Sent Order Stock Rejected Event: " + event);
+            } else {
+                OrderStockConfirmed event = new OrderStockConfirmed(message.id(),message.product() + " ürünü Reserve edildi");
+
+                streamBridge.send("orderStockConfirmed-out-0",event);
+                System.out.println("Sent Order Stock Confirmed Event: " + event);
             }
 
 

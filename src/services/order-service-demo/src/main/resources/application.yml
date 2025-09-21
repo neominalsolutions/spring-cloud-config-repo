@@ -7,9 +7,9 @@ spring:
   profiles:
     active: dev
   cloud:
+    function:
+      definition: orderStockRejected;orderStockConfirmed
     stream:
-      function:
-        autodetect: true
       bindings:
         submitOrder-out-0:
           destination: submitOrder
@@ -17,6 +17,10 @@ spring:
 
         orderStockRejected-in-0:
           destination: orderStockRejected
+          content-type: application/json
+
+        orderStockConfirmed-in-0:
+          destination: orderStockConfirmed
           content-type: application/json
 
       kafka:

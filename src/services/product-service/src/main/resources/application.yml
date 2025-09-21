@@ -17,6 +17,9 @@ spring:
         orderStockRejected-out-0:
           destination: orderStockRejected
           content-type: application/json
+        orderStockConfirmed-out-0:
+          destination: orderStockConfirmed
+          content-type: application/json
       kafka:
         binder:
           auto-create-topics: true
