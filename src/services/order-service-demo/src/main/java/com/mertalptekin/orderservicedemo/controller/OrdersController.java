@@ -16,14 +16,9 @@ public class OrdersController {
     @Value("${server.port}")
     private String port;
 
-
-    @Value("${serviceName}")
-    private  String serviceName;
-
-
     @GetMapping
     public  String get() {
-        return  "ServiceName: " + serviceName +  ", Port: " + port;
+        return   ", Port: " + port;
     }
 
     @PostMapping("/submitOrder")

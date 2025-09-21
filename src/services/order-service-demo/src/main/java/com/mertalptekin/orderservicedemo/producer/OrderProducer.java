@@ -12,7 +12,7 @@ public class OrderProducer {
     private final StreamBridge streamBridge;
 
     public void sendOrder(String message) {
-        streamBridge.send("orderOut","message");
+        streamBridge.send("submitOrder-out-0",message);
         System.out.println("Sent order: " + message);
     }
 }

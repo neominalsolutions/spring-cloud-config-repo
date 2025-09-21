@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 public class OrderConsumer {
 
 
-    @Bean
-    public Consumer<String> orderIn() {
+    @Bean(name = "input")
+    public Consumer<String> input() {
         return message -> {
             System.out.println("Received order: " + message);
             // Burada iş mantığını yazabilirsin, örn DB kaydı vs.
