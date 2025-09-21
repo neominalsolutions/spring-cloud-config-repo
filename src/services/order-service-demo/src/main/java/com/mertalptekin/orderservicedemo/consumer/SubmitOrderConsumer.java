@@ -6,12 +6,12 @@ import org.springframework.stereotype.Component;
 import java.util.function.Consumer;
 
 @Component
-public class OrderConsumer {
+public class SubmitOrderConsumer {
 
     @Bean
-    public Consumer<String> orderIn() {
+    public Consumer<String> submitOrder() {
         return message -> {
-            System.out.println("Received order: " + message);
+            System.out.println("Received order 0: " + message);
             // Burada iş mantığını yazabilirsin, örn DB kaydı vs.
         };
     }
