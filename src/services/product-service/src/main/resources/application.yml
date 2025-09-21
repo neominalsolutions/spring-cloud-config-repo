@@ -7,10 +7,15 @@ spring:
 
   cloud:
     stream:
+      function:
+        autodetect: true
       bindings:
         # Consumer
-        input:
-          destination: orders-topic
+        submitOrder-in-0:
+          destination: submitOrder
+          content-type: application/json
+        orderStockRejected-out-0:
+          destination: orderStockRejected
           content-type: application/json
       kafka:
         binder:

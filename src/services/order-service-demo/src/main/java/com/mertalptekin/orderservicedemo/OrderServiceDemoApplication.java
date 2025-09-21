@@ -12,13 +12,19 @@ import java.util.function.Consumer;
 public class OrderServiceDemoApplication {
 
 
+
 //    @Bean
 //    public Consumer<String> submitOrder() {
 //        return message -> {
-//            System.out.println("Received order: " + message);
-//            // Burada iş mantığını yazabilirsin, örn DB kaydı vs.
+//            System.out.println("🟢 SubmitOrder: " + message);
 //        };
 //    }
+
+
+
+
+
+
 
     public static void main(String[] args) {
         SpringApplication.run(OrderServiceDemoApplication.class, args);

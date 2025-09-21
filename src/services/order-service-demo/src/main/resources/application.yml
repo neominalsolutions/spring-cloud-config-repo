@@ -11,12 +11,14 @@ spring:
       function:
         autodetect: true
       bindings:
-        submitOrder-in-0:
-          destination: orders-topic
-          content-type: application/json
         submitOrder-out-0:
-          destination: orders-topic
+          destination: submitOrder
           content-type: application/json
+
+        orderStockRejected-in-0:
+          destination: orderStockRejected
+          content-type: application/json
+
       kafka:
         binder:
           auto-create-topics: true

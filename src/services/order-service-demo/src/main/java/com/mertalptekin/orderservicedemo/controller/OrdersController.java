@@ -1,7 +1,7 @@
 package com.mertalptekin.orderservicedemo.controller;
 
-import com.mertalptekin.messaging.model.Order;
-import com.mertalptekin.orderservicedemo.producer.OrderProducer;
+import com.mertalptekin.messaging.model.SubmitOrderMessage;
+import com.mertalptekin.orderservicedemo.producer.SubmitOrderProducer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrdersController {
 
-    private final OrderProducer orderProducer;
+    private final SubmitOrderProducer orderProducer;
 
     @Value("${server.port}")
     private String port;
@@ -22,8 +22,8 @@ public class OrdersController {
     }
 
     @PostMapping("/submitOrder")
-    public String sendOrder() {
-        orderProducer.sendOrder("order-message");
+    public String sendOrder(@RequestBody SubmitOrderMessage message) {
+        orderProducer.sendOrder(message);
         return "Order sent!";
     }
 
