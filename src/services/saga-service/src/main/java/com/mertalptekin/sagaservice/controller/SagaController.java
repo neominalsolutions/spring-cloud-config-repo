@@ -1,34 +1,31 @@
 package com.mertalptekin.sagaservice.controller;
 
 
-import org.springframework.statemachine.StateMachine;
+
+import com.mertalptekin.sagaservice.event.OrderSubmittedEvent;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.UUID;
+import java.util.random.RandomGenerator;
 
 @RestController
 @RequestMapping("/api/v1/saga")
 public class SagaController {
 
-    private StateMachine<String, String> stateMachine;
+    private StreamBridge streamBridge;
 
-    public SagaController(StateMachine<String, String> stateMachine) {
-        this.stateMachine = stateMachine;
+    public SagaController(StreamBridge streamBridge) {
+        this.streamBridge = streamBridge;
     }
 
     @PostMapping("/submit")
-    public String submitOrder() {
+    public void submitOrder() {
 
-        // Not: Neden bu arkadaşlar deprecated buna bakalım.
-        stateMachine.start();
-        stateMachine.sendEvent("SUBMIT_ORDER_EVENT");
-        stateMachine.sendEvent("CHECK_STOCK_SUCCESS");
-        stateMachine.sendEvent("PAY_SUCCESS");
-
-        System.out.println("Order submitted! Current state: " + stateMachine.getState().getId());
-
-
-        return "Order process triggered!";
+        this.streamBridge.send("sendOrderSubmitEvent",new OrderSubmittedEvent(UUID.randomUUID().toString()));
     }
 
 }
