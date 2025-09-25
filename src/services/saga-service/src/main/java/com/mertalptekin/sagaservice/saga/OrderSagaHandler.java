@@ -1,43 +1,60 @@
 package com.mertalptekin.sagaservice.saga;
 
 import com.mertalptekin.sagaservice.event.*;
-import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OrderSagaHandler {
 
-    private final StreamBridge streamBridge;
+    private final OrderSagaService sagaService;
 
-    public OrderSagaHandler(StreamBridge streamBridge) {
-        this.streamBridge = streamBridge;
+    public OrderSagaHandler(OrderSagaService sagaService) {
+        this.sagaService = sagaService;
     }
 
     public void handleOrderSubmitted(OrderSubmittedEvent event) {
-        var checkStock = new CheckStockEvent(event.orderId(),5);
-        streamBridge.send("checkStockEvent-out-0", checkStock);
+        var checkStockEvent = new CheckStockEvent(event.orderId(), event.code(), event.quantity());
+
+        System.out.println("handleOrderSubmitted " + event);
+
+        this.sagaService.sendCheckStockEvent(checkStockEvent);
     }
 
     public void handleStockReserved(StockReservedEvent event) {
-        var makePayment = new MakePaymentEvent(event.orderId(),500);
-        streamBridge.send("payment-out-0", makePayment);
+
+        Double amount = Math.random() * 100;
+
+        var makePaymentEvent = new MakePaymentEvent(event.orderId(), event.code(),amount);
+        System.out.println("Ödenecek tutar " + amount);
+        System.out.println("handleStockReserved " + event);
+
+        this.sagaService.sendMakePaymentEvent(makePaymentEvent);
     }
 
     public void handleStockNotAvailable(StockNotAvailableEvent event) {
-        var reject = new RejectOrderEvent(event.orderId(),"Stock not available");
-        streamBridge.send("order-out-0", reject);
+
+        System.out.println("handleStockNotAvailable " + event);
+        var rejectEvent = new RejectOrderEvent(event.orderId(),"Stock not available");
+        this.sagaService.sendRejectOrderEvent(rejectEvent);
+
     }
 
     public void handlePaymentSucceeded(PaidSucceededEvent event) {
-        var complete = new CompleteOrderEvent(event.orderId());
-        streamBridge.send("order-out-0", complete);
+        var completeEvent = new CompleteOrderEvent(event.orderId());
+
+        System.out.println("handlePaymentSucceeded " + completeEvent);
+
+        this.sagaService.sendCompleteOrderEvent(completeEvent);
     }
 
     public void handlePaymentFailed(PaidFailedEvent event) {
-        var release = new ReleaseStockEvent(event.stockCode(),event.orderId());
-        streamBridge.send("inventory-out-0", release);
 
-        var reject = new RejectOrderEvent(event.orderId(),"Payment failed");
-        streamBridge.send("order-out-0", reject);
+        System.out.println("handlePaymentFailed " + event);
+
+        var releaseEvent = new ReleaseStockEvent(event.code(),event.orderId());
+        this.sagaService.sendReleaseStockEvent(releaseEvent);
+
+        var rejectEvent = new RejectOrderEvent(event.orderId(),"Payment failed");
+        this.sagaService.sendRejectOrderEvent(rejectEvent);
     }
 }

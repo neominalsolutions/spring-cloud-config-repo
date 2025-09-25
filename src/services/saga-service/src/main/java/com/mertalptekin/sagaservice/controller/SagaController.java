@@ -3,29 +3,26 @@ package com.mertalptekin.sagaservice.controller;
 
 
 import com.mertalptekin.sagaservice.event.OrderSubmittedEvent;
-import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.integration.support.MessageBuilder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.mertalptekin.sagaservice.saga.OrderSagaService;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
-import java.util.random.RandomGenerator;
+
 
 @RestController
 @RequestMapping("/api/v1/saga")
 public class SagaController {
 
-    private StreamBridge streamBridge;
+    private final OrderSagaService orderSagaService;
 
-    public SagaController(StreamBridge streamBridge) {
-        this.streamBridge = streamBridge;
+    public SagaController(OrderSagaService orderSagaService) {
+        this.orderSagaService = orderSagaService;
     }
 
-    @PostMapping("/submit")
-    public void submitOrder() {
+    @PostMapping("submit")
+    public void submitOrder(@RequestBody OrderSubmittedEvent orderSubmittedEvent) {
 
-        this.streamBridge.send("sendOrderSubmitEvent",new OrderSubmittedEvent(UUID.randomUUID().toString()));
+        this.orderSagaService.sendSubmitOrderEvent(orderSubmittedEvent);
     }
 
 }

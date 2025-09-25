@@ -12,32 +12,62 @@ import java.util.function.Consumer;
 
         private final OrderSagaHandler sagaHandler;
 
+
         public OrderSagaConsumer(OrderSagaHandler sagaHandler) {
             this.sagaHandler = sagaHandler;
         }
 
         @Bean
-        public Consumer<OrderSubmittedEvent> orderSubmitted() {
+        public Consumer<OrderSubmittedEvent> orderSubmitEvent() {
             return sagaHandler::handleOrderSubmitted;
         }
 
         @Bean
-        public Consumer<StockReservedEvent> stockReserved() {
+        public Consumer<CheckStockEvent> checkStockEvent() {
+
+            long availableStock = Math.round(Math.random() * 100);
+
+            return  event -> {
+                if(event.quantity() > availableStock) {
+                    sagaHandler.handleStockNotAvailable(new StockNotAvailableEvent(event.orderId(),event.code()));
+
+                } else {
+                    sagaHandler.handleStockReserved(new StockReservedEvent(event.orderId(),event.code(),event.quantity()));
+                }
+            };
+        }
+
+        @Bean
+        public  Consumer<MakePaymentEvent> makePaymentEvent() {
+            return event -> {
+                double balance = Math.random() * 100; // bakiye
+                System.out.println("bakiye :" + balance);
+                System.out.println("ödenecek tutar :" + event.amount());
+                if(event.amount() > balance){ // ödenecek tutar bakiyeden fazla ise limit yetersiz
+                    sagaHandler.handlePaymentFailed(new PaidFailedEvent(event.orderId(),event.code(),"Bakiye Yetersiz"));
+                } else {
+                    sagaHandler.handlePaymentSucceeded(new PaidSucceededEvent(event.orderId(),"Ödeme alındı"));
+                }
+            };
+        }
+
+        @Bean
+        public Consumer<StockReservedEvent> stockReservedEvent() {
             return sagaHandler::handleStockReserved;
         }
 
         @Bean
-        public Consumer<StockNotAvailableEvent> stockNotAvailable() {
+        public Consumer<StockNotAvailableEvent> stockNotAvailableEvent() {
             return sagaHandler::handleStockNotAvailable;
         }
 
         @Bean
-        public Consumer<PaidSucceededEvent> paidSucceeded() {
+        public Consumer<PaidSucceededEvent> paidSucceededEvent() {
             return sagaHandler::handlePaymentSucceeded;
         }
 
         @Bean
-        public Consumer<PaidFailedEvent> paidFailed() {
+        public Consumer<PaidFailedEvent> paidFailedEvent() {
             return sagaHandler::handlePaymentFailed;
         }
 

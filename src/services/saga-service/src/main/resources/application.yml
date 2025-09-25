@@ -5,80 +5,81 @@ spring:
     name: saga-service
   cloud:
     function:
-      definition: handleOrderSubmitted,handleStockReserved,handleStockNotAvailable,handlePaidSucceeded,handlePaidFailed
+      definition: orderSubmitEvent;checkStockEvent;makePaymentEvent;stockReservedEvent;stockNotAvailableEvent;paidSucceededEvent;paidFailedEvent
     stream:
       bindings:
-        orderSubmitEvent-in-0:
-          destination: saga_topics
-          group: saga-service
-        stockReserved-in-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
-        stockNotAvailable-in-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
-        paidSucceeded-in-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
-        paidFailed-in-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
         orderSubmitEvent-out-0:
-          destination: saga_topics
+          destination: saga_order_submitted
           content-type: application/json
-        stockReserved-out-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
-        stockNotAvailable-out-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
-        paidSucceeded-out-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
-        paidFailed-out-0:
-          destination: saga_topics
-          group: saga-service
-          content-type: application/json
-
         checkStockEvent-out-0:
-            destination: saga_topics
+            destination: saga_order_checkStock
             content-type: application/json
         makePaymentEvent-out-0:
-            destination: saga_topics
+            destination: saga_order_makePayment
             content-type: application/json
+        stockReservedEvent-ou-0:
+          destination: saga_order_stockReserved
+          content-type: application/json
+        stockNotAvailableEvent-out-0:
+          destination: saga_order_stockNotAvailable
+          content-type: application/json
+        paidSucceededEvent-out-0:
+          destination: saga_order_paidSucceeded
+          content-type: application/json
+        paidFailedEvent-out-0:
+          destination: saga_order_paidFailed
+          content-type: application/json
         completeOrderEvent-out-0:
-            destination: saga_topics
+            destination: saga_order_completeOrder
             content-type: application/json
         rejectOrderEvent-out-0:
-          destination: saga_topics
+          destination: saga_order_rejectOrder
           content-type: application/json
         releaseStockEvent-out-0:
-          destination: saga_topics
+          destination: saga_order_releaseStock
           content-type: application/json
 
+
+
+        orderSubmitEvent-in-0:
+          destination: saga_order_submitted
+          group: saga-service
         checkStockEvent-in-0:
-          destination: saga_topics
+          destination: saga_order_checkStock
           content-type: application/json
         makePaymentEvent-in-0:
-          destination: saga_topics
+          destination: saga_order_makePayment
+          content-type: application/json
+        stockReservedEvent-in-0:
+          destination: saga_order_stockReserved
+          content-type: application/json
+        stockNotAvailableEvent-in-0:
+          destination: saga_order_stockNotAvailable
+          content-type: application/json
+        paidSucceededEvent-in-0:
+          destination: saga_order_paidSucceeded
+          content-type: application/json
+        paidFailedEvent-in-0:
+          destination: saga_order_paidFailed
           content-type: application/json
         completeOrderEvent-in-0:
-          destination: saga_topics
+          destination: saga_order_completeOrder
           content-type: application/json
         rejectOrderEvent-in-0:
-          destination: saga_topics
+          destination: saga_order_rejectOrder
           content-type: application/json
         releaseStockEvent-in-0:
-          destination: saga_topics
+          destination: saga_order_releaseStock
           content-type: application/json
+
+
       kafka:
         binder:
           auto-create-topics: true
           brokers: localhost:9092
+
+logging:
+  pattern:
+    console:
+  level:
+    root: OFF
