@@ -82,10 +82,18 @@ spring:
           content-type: application/json
           group: order-service
 
+
       kafka:
         binder:
+          configuration:
+            isolation:
+              level=read_committed
           auto-create-topics: true
           brokers: localhost:29092
+
+
+
+
 
 logging:
   pattern:
