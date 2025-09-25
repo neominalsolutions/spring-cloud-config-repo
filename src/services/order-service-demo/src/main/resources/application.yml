@@ -6,11 +6,23 @@ spring:
     name: order-service
   profiles:
     active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/order_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
   cloud:
     function:
-      definition: orderStockRejected;orderStockConfirmed
+      definition: orderStockRejected;orderStockConfirmed;debeziumEvent
     stream:
       bindings:
+
         submitOrder-out-0:
           destination: submitOrder
           content-type: application/json
@@ -22,6 +34,11 @@ spring:
         orderStockConfirmed-in-0:
           destination: orderStockConfirmed
           content-type: application/json
+
+        debeziumEvent-in-0:
+          destination: submitOrder.public.orders # debezium
+          content-type: application/json
+          group: debezium-submit-order
 
       kafka:
         binder:
@@ -38,3 +55,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+
+
+
+
+  # submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>
