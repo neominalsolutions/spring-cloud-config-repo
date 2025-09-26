@@ -47,4 +47,10 @@ public class OrdersController {
     }
 
 
+    @GetMapping("/orderedProducts")
+    public  String getOrderedProducts() {
+        return   ", Ordered Products";
+    }
+
+
 }

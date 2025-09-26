@@ -1,6 +1,11 @@
 server:
   port: 5003
 
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId},%X{spanId}] %-5level %logger{36} - %msg%n"
+
 spring:
   application:
     name: product-service
@@ -33,3 +38,12 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0  # Tüm request’leri trace et
+
+
+# http://localhost:9411/zipkin/
