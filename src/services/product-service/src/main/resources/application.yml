@@ -9,7 +9,12 @@ logging:
 spring:
   application:
     name: product-service
-
+  boot:
+    admin:
+      client:
+        url: http://localhost:5050
+        instance:
+          service-url: http://localhost:5003
   cloud:
     stream:
       function:
@@ -44,6 +49,13 @@ management:
   tracing:
     sampling:
       probability: 1.0  # Tüm request’leri trace et
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+      health:
+        show-details: ALWAYS
 
 
 # http://localhost:9411/zipkin/

@@ -1,0 +1,16 @@
+server:
+  port: 5050
+
+spring:
+  application:
+    name: spring-cloud-admin
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS # Health endpoint'inde detayl? bilgi g�sterir
+
