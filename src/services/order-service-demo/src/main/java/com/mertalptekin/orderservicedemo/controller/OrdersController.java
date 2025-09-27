@@ -48,7 +48,13 @@ public class OrdersController {
 
 
     @GetMapping("/orderedProducts")
-    public  String getOrderedProducts() {
+    public  String getOrderedProducts() throws InterruptedException {
+
+        Thread.sleep(8000);
+
+//        throw new RuntimeException("Hata");
+
+
         return   ", Ordered Products";
     }
 

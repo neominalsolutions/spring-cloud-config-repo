@@ -45,6 +45,7 @@ spring:
           auto-create-topics: true
           brokers: localhost:29092
 
+
 management:
   endpoints:
     web:
@@ -53,7 +54,6 @@ management:
   tracing:
     sampling:
         probability: 1.0  # Tüm request’leri trace et
-
 
 eureka:
   client:
@@ -66,3 +66,5 @@ eureka:
   # submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>
 
   # 68d665e5364b2b06c03f7afb2bb18030 -> 68d665e5202d6f281eba149f703984fd
+
+

@@ -2,7 +2,11 @@ server:
   port: 5003
 
 
+
 logging:
+  level:
+    io.github.resilience4j.ratelimiter: DEBUG
+    io.github.resilience4j: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%X{traceId},%X{spanId}] %-5level %logger{36} - %msg%n"
 
@@ -58,4 +62,36 @@ management:
         show-details: ALWAYS
 
 
-# http://localhost:9411/zipkin/
+resilience4j:
+  circuitbreaker:
+    instances:
+      orderService:
+        registerHealthIndicator: true # Actuator üzerinden circuit breaker durumu izlenebilir
+        slidingWindowSize: 5          # Son 5 çağrı değerlendirilir
+        minimumNumberOfCalls: 3       # Circuit breaker karar vermeden önce en az 3 çağrı olmalı
+        failureRateThreshold: 50      # %50 başarısızlık oranına ulaşılırsa devre kesilir (open state)
+        waitDurationInOpenState: 5s    # Open state'te kaldıktan sonra 5 saniye bekleyip tekrar deneme yapılır
+  retry:
+    instances:
+      orderService:
+        max-attempts: 3 # Maksimum deneme sayısı (ilk istek + 2 retry = toplam 3)
+        wait-duration: 1s # Her deneme arasında 1 saniye bekle
+
+  ratelimiter:
+    instances:
+      orderService:
+        limit-for-period: 5   # 100s 5 adet çağrı limiti
+        limit-refresh-period: 100s
+        timeout-duration: 0s
+
+  bulkhead:
+    instances:
+      orderService:
+        max-concurrent-calls: 3  # Aynı anda en fazla 3 thread bu servise çağrı yapabilir
+        max-wait-duration: 0s     # Eğer thread havuzu doluysa, beklemeden hata ver (0 ms bekle)
+
+  timelimiter:
+    instances:
+      orderService:
+        timeout-duration: 2s
+
