@@ -44,17 +44,10 @@ spring:
         binder:
           auto-create-topics: true
           brokers: localhost:29092
+          enable-observation: true # Spring Boot 3+ ve Micrometer Tracing 1.0+ ile birlikte gelen Observation API desteğini etkinleştiriyor ve tracing ile ilgili işleri otomatikleştiriyor.
 
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  tracing:
-    sampling:
-        probability: 1.0  # Tüm request’leri trace et
-
+#euraka_client
 eureka:
   client:
     service-url:
@@ -62,9 +55,7 @@ eureka:
 
 
 
+  # Debezium: -> submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>
 
-  # submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>
-
-  # 68d665e5364b2b06c03f7afb2bb18030 -> 68d665e5202d6f281eba149f703984fd
 
 

@@ -21,6 +21,10 @@ public class TracingAspect {
     // execution(* package..*(..)) -> package altındaki tüm methodlar
     @Around("execution(* com.mertalptekin.productservice..*(..))")
     public Object traceServiceMethods(ProceedingJoinPoint pjp) throws Throwable {
+
+
+        System.out.println("TracingAspect.traceServiceMethods");
+
         // Mevcut span üzerinden child span aç
         Span span = tracer.nextSpan().name(pjp.getSignature().toShortString()).start();
         try {
