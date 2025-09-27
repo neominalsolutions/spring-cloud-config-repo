@@ -1,9 +1,14 @@
 server:
   port: 5050
 
+
 spring:
   application:
     name: spring-cloud-admin
+  security:
+    user:
+      name: admin
+      password: P@ssword1
 
 management:
   endpoints:

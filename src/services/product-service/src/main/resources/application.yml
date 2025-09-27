@@ -19,6 +19,8 @@ spring:
         url: http://localhost:5050
         instance:
           service-url: http://localhost:5003
+        username: admin
+        password: P@ssword1
   cloud:
     stream:
       function:
@@ -93,5 +95,7 @@ resilience4j:
   timelimiter:
     instances:
       orderService:
-        timeout-duration: 2s
+        timeout-duration: 2s       # Metot 2 saniye içinde tamamlanmazsa iptal edilir.
+        cancelRunningFuture: true # süre aşımı olursa arka plandaki işlemleri de durdur
+
 
