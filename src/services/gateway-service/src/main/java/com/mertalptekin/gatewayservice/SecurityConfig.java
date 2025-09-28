@@ -57,8 +57,8 @@ public class SecurityConfig {
         public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
 
             http.authorizeExchange(exchanges -> exchanges
-                            .pathMatchers("/user-service/**")
-                            .hasAuthority("user-service-access")
+                            .pathMatchers("/product-service/**")
+                            .hasAuthority("product-service-access")
 
                             // order-service route => order-service-access scope
                             .pathMatchers("/order-service/**")
