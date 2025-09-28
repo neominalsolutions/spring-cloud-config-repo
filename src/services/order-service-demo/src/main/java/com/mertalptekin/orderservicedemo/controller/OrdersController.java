@@ -29,7 +29,7 @@ public class OrdersController {
 
     @GetMapping
     public  String get() {
-        return   ", Port: " + port;
+        return   ",Order Service Port: " + port;
     }
 
     @PostMapping("/submitOrder")
