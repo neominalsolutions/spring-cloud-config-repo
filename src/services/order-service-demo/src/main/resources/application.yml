@@ -6,6 +6,11 @@ spring:
     name: order-service
   profiles:
     active: dev
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/test-realm
   datasource:
     url: jdbc:postgresql://localhost:5432/order_db
     username: postgres
@@ -54,8 +59,9 @@ eureka:
       defaultZone: http://localhost:5099/eureka/
 
 
+#Logback ELK Logging
+#logging:
+#  config: classpath:logback_spring.xml
 
-  # Debezium: -> submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>
 
-
-
+# Debezium Kafka Topic: -> submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>
