@@ -56,12 +56,12 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:5099/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 
 #Logback ELK Logging
-#logging:
-#  config: classpath:logback_spring.xml
+logging:
+  config: classpath:logback_spring.xml
 
 
 # Debezium Kafka Topic: -> submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>

@@ -34,7 +34,7 @@ public class OrdersController {
     @GetMapping
     public  String get() {
 
-        logger.info("Order Service Log");
+        logger.error("Order Service Log");
 
         return   ",Order Service Port: " + port;
     }
