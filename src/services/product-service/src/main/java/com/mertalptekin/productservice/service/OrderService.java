@@ -38,6 +38,7 @@ public class OrderService {
     @Bulkhead(name = "orderService",fallbackMethod = "fallbackBulkHead")
     // @RateLimiter(name = "orderService",fallbackMethod = "rateLimitFallback")
     public String getOrderedProducts(GetOrderedProduct model) {
+     
       // Span span = tracer.nextSpan().name("OrderService.getOrderedProducts").start();
        var result = orderClient.getOrderedProducts();
        //span.end();
