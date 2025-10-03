@@ -26,16 +26,13 @@ public class OrdersController {
 
     private final SubmitOrderProducer orderProducer;
     private final OrderService orderService;
-    private static final Logger logger = LoggerFactory.getLogger(OrdersController.class);
+
 
     @Value("${server.port}")
     private String port;
 
     @GetMapping
     public  String get() {
-
-        logger.error("Order Service Log");
-
         return   ",Order Service Port: " + port;
     }
 

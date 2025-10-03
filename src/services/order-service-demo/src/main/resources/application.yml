@@ -10,7 +10,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/realms/test-realm
+          issuer-uri: http://localhost:8180/realms/java-microservices
   datasource:
     url: jdbc:postgresql://localhost:5432/order_db
     username: postgres
@@ -59,9 +59,6 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
 
 
-#Logback ELK Logging
-logging:
-  config: classpath:logback_spring.xml
 
 
 # Debezium Kafka Topic: -> submitOrder.public.orders -> <topic.prefix>.<schema-name>.<table-name>
