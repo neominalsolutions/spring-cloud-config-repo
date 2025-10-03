@@ -22,6 +22,7 @@ import java.util.function.Consumer;
             return sagaHandler::handleOrderSubmitted;
         }
 
+        // Inventory Service Consumer
         @Bean
         public Consumer<CheckStockEvent> checkStockEvent() {
 
@@ -37,6 +38,7 @@ import java.util.function.Consumer;
             };
         }
 
+        // Payment Service Consumer
         @Bean
         public  Consumer<MakePaymentEvent> makePaymentEvent() {
             return event -> {
@@ -51,6 +53,8 @@ import java.util.function.Consumer;
             };
         }
 
+        // Eğer Inventory serviste stockReservedEvent dinlersem bu durumda nasıl bir step den devam eceğime karar verebilirim.
+    // Not: Saga Servisler karar adımlarını uygularken replay channeldan dönen eventleri dinleyerek karar verebilir.
         @Bean
         public Consumer<StockReservedEvent> stockReservedEvent() {
             return sagaHandler::handleStockReserved;

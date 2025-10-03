@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import java.util.function.Consumer;
 
 @SpringBootApplication
-@EnableFeignClients(basePackages = "com.mertalptekin.orderservicedemo.client")
+@EnableFeignClients(basePackages = "com.mertalptekin.orderservicedemo")
 public class OrderServiceDemoApplication {
 
     public static void main(String[] args) {

@@ -12,6 +12,7 @@ public class OrderSagaHandler {
         this.sagaService = sagaService;
     }
 
+    // Order Submitted Event alındığında stok kontrolü için CheckStockEvent fırlatılır.
     public void handleOrderSubmitted(OrderSubmittedEvent event) {
         var checkStockEvent = new CheckStockEvent(event.orderId(), event.code(), event.quantity());
 
@@ -20,6 +21,7 @@ public class OrderSagaHandler {
         this.sagaService.sendCheckStockEvent(checkStockEvent);
     }
 
+    // Stok rezervasyonu başarılı ise ödeme işlemi için MakePaymentEvent fırlatılır.
     public void handleStockReserved(StockReservedEvent event) {
 
         Double amount = Math.random() * 100;
@@ -31,6 +33,7 @@ public class OrderSagaHandler {
         this.sagaService.sendMakePaymentEvent(makePaymentEvent);
     }
 
+    // Stok rezervasyonu başarısız ise siparişi reddetmek için RejectOrderEvent fırlatılır.
     public void handleStockNotAvailable(StockNotAvailableEvent event) {
 
         System.out.println("handleStockNotAvailable " + event);
@@ -39,6 +42,7 @@ public class OrderSagaHandler {
 
     }
 
+    // Ödeme başarılı ise siparişi tamamlamak için CompleteOrderEvent fırlatılır.
     public void handlePaymentSucceeded(PaidSucceededEvent event) {
         var completeEvent = new CompleteOrderEvent(event.orderId());
 
@@ -47,6 +51,7 @@ public class OrderSagaHandler {
         this.sagaService.sendCompleteOrderEvent(completeEvent);
     }
 
+    // Ödeme başarısız ise stok rezervasyonunu geri almak için ReleaseStockEvent ve siparişi reddetmek için RejectOrderEvent fırlatılır.
     public void handlePaymentFailed(PaidFailedEvent event) {
 
         System.out.println("handlePaymentFailed " + event);

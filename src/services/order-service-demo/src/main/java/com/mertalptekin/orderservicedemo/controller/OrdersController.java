@@ -49,6 +49,7 @@ public class OrdersController {
         return "Order sent!";
     }
 
+    // Debezium Testi
     @PostMapping("submitOrderDebezium")
     public ResponseEntity sendOrder(@RequestBody SubmitOrder orderDto) {
 
